@@ -63,3 +63,38 @@ const galleryItems = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+console.log('galleryItems', galleryItems)
+
+
+function createGalleryMarkUp(galleryItems) {
+  const markup = galleryItems.map(({ preview, description }) => {
+    return `
+    <div class="lightbox js-lightbox">
+      <div class="lightbox__overlay"></div>
+
+      <div class="lightbox__content">
+        <img class="lightbox__image" src="${preview}" alt="${description}" />
+      </div>
+
+      <button
+        type="button"
+        class="lightbox__button"
+        data-action="close-lightbox"
+      ></button>
+    </div>
+  `;
+    
+  });
+
+    //console.log('markup : ', markup[0]);
+  return markup.join('');
+ }
+
+
+
+ console.log ('createGalleryItem(galleryItems)', createGalleryMarkUp (galleryItems))
+
+
+
+ 
