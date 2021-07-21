@@ -67,7 +67,10 @@ const galleryItems = [
 console.log('galleryItems', galleryItems)
 
 
-function createGalleryMarkUp(galleryItems) {
+const galleryContainer = document.querySelector('.js-gallery');
+
+
+function createGalleryMarkup(galleryItems) {
   const markup = galleryItems.map(({ preview, description }) => {
     return `
     <div class="lightbox js-lightbox">
@@ -86,15 +89,11 @@ function createGalleryMarkUp(galleryItems) {
   `;
     
   });
-
-    //console.log('markup : ', markup[0]);
   return markup.join('');
  }
 
 
+ const galleryMarkup = createGalleryMarkup(galleryItems);
 
- console.log ('createGalleryItem(galleryItems)', createGalleryMarkUp (galleryItems))
+galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
 
-
-
- 
