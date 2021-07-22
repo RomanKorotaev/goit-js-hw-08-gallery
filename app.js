@@ -97,24 +97,28 @@ function createGalleryMarkup(galleryItems) {
 
 // --------------- Открытие модального окна и большой оригинальной картинки
 
-const galleryLinkSelector= document.querySelector('ul .gallery__link')
-console.log('testSelector.href = ', galleryLinkSelector)
-
+const galleryLinkSelector = document.querySelector('ul .gallery__link'); //
 
 galleryContainer.addEventListener('click', openModal);
 
+const modalWindowImg = document.querySelector('img.lightbox__image')
 const modalWindowSelector = document.querySelector('div.lightbox');
 
 function openModal(event) {
   event.preventDefault();
   modalWindowSelector.classList.add('is-open');
 
-  const modalWindowImg = document.querySelector(' img.lightbox__image')
+  const modalWindowImg = document.querySelector('img.lightbox__image')
   modalWindowImg.src = event.target.dataset.source
 }
 
 
 // --------------- Закрытие модального окна
 
+const closeModalBtm = document.querySelector('button.lightbox__button')
+closeModalBtm.addEventListener('click', onCloseModalBtm)
 
-
+function onCloseModalBtm() {
+  modalWindowSelector.classList.remove('is-open');
+  modalWindowImg.src = ''; //Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
+ }
