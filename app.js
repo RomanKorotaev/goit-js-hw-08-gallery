@@ -113,7 +113,7 @@ function openModal(event) {
 }
 
 
-// --------------- Закрытие модального окна
+// --------------- Закрытие модального окна при нажатии на кнорку
 
 const closeModalBtm = document.querySelector('button.lightbox__button')
 closeModalBtm.addEventListener('click', onCloseModalBtm)
@@ -122,3 +122,8 @@ function onCloseModalBtm() {
   modalWindowSelector.classList.remove('is-open');
   modalWindowImg.src = ''; //Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
  }
+
+
+ // ---------------  Закрытие модального окна по клику на div.lightbox__overlay
+const closeModalOverlay = document.querySelector('div.lightbox__overlay')
+ closeModalOverlay.addEventListener('click', onCloseModalBtm)
