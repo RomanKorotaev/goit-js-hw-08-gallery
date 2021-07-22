@@ -127,3 +127,11 @@ function onCloseModalBtm() {
  // ---------------  Закрытие модального окна по клику на div.lightbox__overlay
 const closeModalOverlay = document.querySelector('div.lightbox__overlay')
  closeModalOverlay.addEventListener('click', onCloseModalBtm)
+
+
+ // Test 
+ window.addEventListener ('keydown', onKeyDown)
+
+function onKeyDown(event) {
+  if (modalWindowSelector.classList.contains('is-open') && event.key === 'Escape') { onCloseModalBtm(); }
+}
