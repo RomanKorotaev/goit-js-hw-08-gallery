@@ -64,28 +64,30 @@ const galleryItems = [
   },
 ];
 
-console.log('galleryItems', galleryItems)
 
+// --------------- Сделана динамическая разметка  с использованием массива объектов и функции map
 
 const galleryContainer = document.querySelector('.js-gallery');
 
+ const galleryMarkup = createGalleryMarkup(galleryItems);
+galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
 
 function createGalleryMarkup(galleryItems) {
-  const markup = galleryItems.map(({ preview, description }) => {
+  const markup = galleryItems.map(({ preview, original, description }) => {
     return `
-    <div class="lightbox js-lightbox">
-      <div class="lightbox__overlay"></div>
-
-      <div class="lightbox__content">
-        <img class="lightbox__image" src="${preview}" alt="${description}" />
-      </div>
-
-      <button
-        type="button"
-        class="lightbox__button"
-        data-action="close-lightbox"
-      ></button>
-    </div>
+    <li class="gallery__item">
+  <a
+    class="gallery__link"
+    href="${original}"
+  >
+    <img
+      class="gallery__image"
+      src="${preview}"
+      data-source="${original}"
+      alt="${description}"
+    />
+  </a>
+</li>
   `;
     
   });
@@ -93,7 +95,26 @@ function createGalleryMarkup(galleryItems) {
  }
 
 
- const galleryMarkup = createGalleryMarkup(galleryItems);
+// --------------- Открытие модального окна и большой оригинальной картинки
 
-galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
+const galleryLinkSelector= document.querySelector('ul .gallery__link')
+console.log('testSelector.href = ', galleryLinkSelector)
+
+
+galleryContainer.addEventListener('click', openModal);
+
+const modalWindowSelector = document.querySelector('div.lightbox');
+
+function openModal(event) {
+  event.preventDefault();
+  modalWindowSelector.classList.add('is-open');
+
+  const modalWindowImg = document.querySelector(' img.lightbox__image')
+  modalWindowImg.src = event.target.dataset.source
+}
+
+
+// --------------- Закрытие модального окна
+
+
 
