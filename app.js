@@ -104,12 +104,21 @@ galleryContainer.addEventListener('click', openModal);
 const modalWindowImg = document.querySelector('img.lightbox__image')
 const modalWindowSelector = document.querySelector('div.lightbox');
 
+
+/////
+let currentModalImg ='';
+
+
 function openModal(event) {
   event.preventDefault();
   modalWindowSelector.classList.add('is-open');
 
-  const modalWindowImg = document.querySelector('img.lightbox__image')
+  //const modalWindowImg = document.querySelector('img.lightbox__image')
   modalWindowImg.src = event.target.dataset.source
+  
+  /////
+  currentModalImg = event.target;
+  console.log('currentModalImg =  ', currentModalImg  );
 }
 
 
@@ -129,10 +138,64 @@ const closeModalOverlay = document.querySelector('div.lightbox__overlay')
  closeModalOverlay.addEventListener('click', onCloseModalBtm)
 
 
- // Test 
- window.addEventListener ('keydown', onKeyDown)
+ // ---------------  Закрытие модального окна по нажатию на кнопку Esc
+ window.addEventListener ('keydown', onKeyDownEsc)
 
-function onKeyDown(event) {
-  //console.log ('event.key = ',event.key)
-  if (modalWindowSelector.classList.contains('is-open') && event.key === 'Escape') { onCloseModalBtm(); }
+function onKeyDownEsc(event) {
+  event.preventDefault();
+  console.log ('event.key = ',event.key)
+  if (modalWindowSelector.classList.contains('is-open') && event.key === 'Escape')
+    onCloseModalBtm();
+
+}
+
+console.log('modalWindowImg = ', modalWindowImg)
+
+ // ---------------  Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо"
+
+  window.addEventListener ('keydown', onKeyDownArrow)
+
+function onKeyDownArrow(event) {
+  event.preventDefault();
+  if (event.key === 'ArrowRight') { console.log ('event.key === ArrowRight : ', event.key) };
+  if (event.key === 'ArrowLeft') { console.log('event.key === ArrowLeft : ', event.key) };
+  
+  if (modalWindowSelector.classList.contains('is-open')) {
+    console.log('Можем пробовать стрелки ');
+
+
+    //console.log(' modalWindowImg.src = event.target.dataset.source', modalWindowImg.src = event.target.dataset.source );
+    //modalWindowImg = modalWindowImg.previousSibling;
+   /* 
+    console.log('currentModalImg = ', currentModalImg);
+    console.log('currentModalImg.parentNode = ', currentModalImg.parentNode);
+    console.log('currentModalImg.parentNode.parentNode = ', currentModalImg.parentNode.parentNode);
+    console.log('currentModalImg.parentNode.parentNode.nextElementSibling = ', currentModalImg.parentNode.parentNode.nextElementSibling);
+
+    //console.log('currentModalImg.parentNode.parentNode.nextElementSibling.src = ', currentModalImg.parentNode.parentNode.nextElementSibling.src);
+   
+    let tmpSelector = currentModalImg.parentNode.parentNode.nextElementSibling;
+    let newImgInModal = tmpSelector.firstElementChild.firstElementChild;
+    console.log('newImgInModal = tmpSelector.firstElementChild.firstElementChild : ', newImgInModal);
+     //modalWindowImg.src = ''
+    modalWindowImg.src = newImgInModal.src;
+
+    */
+    //console.log('galleryItems[0].original', galleryItems[0].original);   
+    //modalWindowImg.src = galleryItems[0].original
+
+    for (let i = 0; i < galleryItems.length-1; i += 1) {
+      if (galleryItems[i].original === modalWindowImg.src) {
+        currentModalImg = modalWindowImg.src;
+        console.log('ССылка на оригинальную картинку найдена', currentModalImg)
+        //modalWindowImg.src = galleryItems[0+1].original
+      } else { console.log('ССылка на оригинальную картинку НЕ найдена') }
+
+      
+      //modalWindowImg.src =  galleryItems[i+1].original
+    }
+    console.log ('galleryItems[0+1].original', galleryItems[0+1].original)
+    //modalWindowImg.src = `${galleryItems[0+1].original}`
+modalWindowImg.src = `${galleryItems[0+1].original}`
+  };
 }
