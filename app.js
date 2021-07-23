@@ -133,5 +133,6 @@ const closeModalOverlay = document.querySelector('div.lightbox__overlay')
  window.addEventListener ('keydown', onKeyDown)
 
 function onKeyDown(event) {
+  //console.log ('event.key = ',event.key)
   if (modalWindowSelector.classList.contains('is-open') && event.key === 'Escape') { onCloseModalBtm(); }
 }
