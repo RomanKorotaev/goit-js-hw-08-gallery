@@ -150,29 +150,46 @@ function onKeyDownEsc(event) {
 function onKeyDownArrow(event) {
   event.preventDefault();
     
+  // Проверяем открыто ли модальное окно и начинаем искать 
+  //позицию(индекс) текущей картинки(ссылки на оригинальное изображение) в массиве объектов galleryItems
+
   if (modalWindowSelector.classList.contains('is-open')) {
     console.log('Можем пробовать стрелки ');
       for (let i = 0; i < galleryItems.length; i += 1) {
         if (galleryItems[i].original === modalWindowImg.src) {
           indexOfNewPictureByArrow = i;
-          break;
+          break; //прерываем поиск, когда элемент найдеи и получаем значение счётчика  indexOfNewPictureByArrow
         }         
       }
   };
 
+// Листаем картинки, нажимая стрелку вправо
   if (event.key === 'ArrowRight') {
-    console.log('event.key === ArrowRight : ', event.key);
-    if (indexOfNewPictureByArrow + 1 <= galleryItems.length) {
-      modalWindowImg.src = galleryItems[indexOfNewPictureByArrow + 1].original
-    } else { modalWindowImg.src = galleryItems[indexOfNewPictureByArrow].original}
-  };
-  
+      if (indexOfNewPictureByArrow + 1 <= galleryItems.length-1) {
+        modalWindowImg.src = galleryItems[indexOfNewPictureByArrow + 1].original;
 
+        indexOfNewPictureByArrow += 1;
+        console.log('indexOfNewPictureByArrow = ', indexOfNewPictureByArrow)
+        
+      } else {
+        indexOfNewPictureByArrow = 0;
+        modalWindowImg.src = galleryItems[indexOfNewPictureByArrow].original;
+        console.log ('indexOfNewPictureByArrow = ', indexOfNewPictureByArrow)
+      }
+  };
+
+
+  // Листаем картинки, нажимая стрелку влево
   if (event.key === 'ArrowLeft') {
-    console.log('event.key === ArrowLeft : ', event.key);
-    if (indexOfNewPictureByArrow - 1 >= 0 ) {
-      modalWindowImg.src = galleryItems[indexOfNewPictureByArrow - 1].original
-    } else { modalWindowImg.src = galleryItems[indexOfNewPictureByArrow].original}
-  };
+      if (indexOfNewPictureByArrow - 1 >= 0 ) {
+        modalWindowImg.src = galleryItems[indexOfNewPictureByArrow - 1].original;
 
+        indexOfNewPictureByArrow -= 1;
+        console.log ('indexOfNewPictureByArrow = ', indexOfNewPictureByArrow)
+      } else {
+        indexOfNewPictureByArrow = galleryItems.length;
+        modalWindowImg.src = galleryItems[galleryItems.length-1].original;
+        console.log('indexOfNewPictureByArrow = ', indexOfNewPictureByArrow);
+      }
+    };
 }
