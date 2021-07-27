@@ -97,39 +97,44 @@ function createGalleryMarkup(galleryItems) {
 
 // --------------- Открытие модального окна и большой оригинальной картинки
 
-const galleryLinkSelector = document.querySelector('ul .gallery__link'); //
+const galleryLinkSelector = document.querySelector('ul .gallery__link'); 
 
 galleryContainer.addEventListener('click', openModal);
 
+// Указатели на разные элементы при открытом модальном окне
 const modalWindowImg = document.querySelector('img.lightbox__image')
 const modalWindowSelector = document.querySelector('div.lightbox');
+const closeModalOverlay = document.querySelector('div.lightbox__overlay')
+const closeModalBtm = document.querySelector('button.lightbox__button')
 
-
+// Функция открытия модального окна
 function openModal(event) {
   event.preventDefault();
   modalWindowSelector.classList.add('is-open');
   modalWindowImg.src = event.target.dataset.source
+
+  // Вешаем слушатели событий для обработки закрытия модального окна нажатием на кнопку Х, Esc, оверлей, выбора картинки стоелками влево,вправо
+  closeModalBtm.addEventListener('click', onCloseModalBtm)
+  closeModalOverlay.addEventListener('click', onCloseModalBtm);
+  window.addEventListener('keydown', onKeyDownEsc);
+  window.addEventListener ('keydown', onKeyDownArrow)
 }
 
 
-// --------------- Закрытие модального окна при нажатии на кнорку
-
-const closeModalBtm = document.querySelector('button.lightbox__button')
-closeModalBtm.addEventListener('click', onCloseModalBtm)
-
+// --------------- Закрытие модального окна при нажатии на кнопку
 function onCloseModalBtm() {
   modalWindowSelector.classList.remove('is-open');
   modalWindowImg.src = ''; //Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
- }
-
-
- // ---------------  Закрытие модального окна по клику на div.lightbox__overlay
-const closeModalOverlay = document.querySelector('div.lightbox__overlay')
- closeModalOverlay.addEventListener('click', onCloseModalBtm)
+ 
+  // Удаляем слушателей событий в модальном окне, при вызове функции о закрытии модального окна
+  window.removeEventListener('keydown', onKeyDownEsc);
+  window.removeEventListener('keydown', onKeyDownArrow);
+  closeModalOverlay.removeEventListener('click', onCloseModalBtm);
+  closeModalBtm.removeEventListener('click', onCloseModalBtm)
+}
 
 
  // ---------------  Закрытие модального окна по нажатию на кнопку Esc
- window.addEventListener ('keydown', onKeyDownEsc)
 
 function onKeyDownEsc(event) {
   event.preventDefault();
@@ -145,7 +150,6 @@ function onKeyDownEsc(event) {
 
   let indexOfNewPictureByArrow = 0;
 
-  window.addEventListener ('keydown', onKeyDownArrow)
 
 function onKeyDownArrow(event) {
   event.preventDefault();
